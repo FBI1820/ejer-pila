@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +28,7 @@ namespace PlaataformaDeRegistro
             //do while que se asegura que el ciclo se repita al menos uno vez 
             do
             {
-                Console.WriteLine("Bienvenido al menu de usuario para estudiantes, por favor ingresa una opcion: ");
+                Console.WriteLine("\nBienvenido al menu de usuario para estudiantes, por favor ingresa una opcion: ");
                 Console.WriteLine("1. Consultar notas");
                 Console.WriteLine("2. Inscribir materias");
                 Console.WriteLine("3. Descargar materiales estudiantes");
@@ -36,27 +36,34 @@ namespace PlaataformaDeRegistro
                 Console.WriteLine("5. atender la primera solicitud");
                 Console.WriteLine("6. Salir");
                 Console.Write("escriba el numero:");
-                OpcionUsuario = Convert.ToInt32(Console.ReadLine());
-
+                try
+                {
+                    OpcionUsuario = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("\ningrese un numero entero.");
+                    continue;
+                }
                 //Realizamos la condicion con switch case para cada una de las opciones
                 switch (OpcionUsuario)
                 {
                     case 1:
                         solicitudCola.Enqueue("Consulta de notas de estudiante");
-                        Console.WriteLine("Su solicitud de consulta de notas esta en lista de espera.");
+                        Console.WriteLine("\nSu solicitud de consulta de notas esta en lista de espera.");
                         break;
                     case 2:
                         solicitudCola.Enqueue("Inscripción a asignaturas");
-                        Console.WriteLine("Su solicitud de inscripción a asignaturas esta en lista de espera.");
+                        Console.WriteLine("\nSu solicitud de inscripción a asignaturas esta en lista de espera.");
                         break;
                     case 3:
                         solicitudCola.Enqueue("Descarga de materiales estudiantes");
-                        Console.WriteLine("Su solicitud de descarga de materiales esta en lista de espera.");
+                        Console.WriteLine("\nSu solicitud de descarga de materiales esta en lista de espera.");
                         break;
                     case 4:
                         if (solicitudCola.Count > 0)
                         {
-                            Console.WriteLine("Solicitudes pendientes en la cola:");
+                            Console.WriteLine("\nSolicitudes pendientes en la cola:");
                             foreach (string solicitud in solicitudCola)
                             {
                                 Console.WriteLine($"- {solicitud}");
@@ -68,15 +75,22 @@ namespace PlaataformaDeRegistro
                         }
                         break;
                     case 5:
-                        solicitudCola.Dequeue();
-                        Console.WriteLine("solicitud eliminada.");
+                        if (solicitudCola.Count > 0)
+                        {
+                            solicitudCola.Dequeue();
+                            Console.WriteLine("\nsolicitud eliminada.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No hay solicitudes pendientes en la cola.");
+                        }
                         break;
                     case 6:
-                        Console.WriteLine("Saliendo del sistema. Gracias por usar el servicio estudiantil.");
+                        Console.WriteLine("\nSaliendo del sistema. Gracias por usar el servicio estudiantil.");
                         Console.ReadKey();
                         break;
                     default:
-                        Console.WriteLine("Opción no válida. Por favor, intente de nuevo.");
+                        Console.WriteLine("\nOpción no válida. Por favor, intente de nuevo.");
                         break;
                 }
 
@@ -84,4 +98,7 @@ namespace PlaataformaDeRegistro
         }
     }
 }
+            
+                    
+                       
 
